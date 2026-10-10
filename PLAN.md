@@ -38,7 +38,8 @@ dangerous-command filter, automatic edits to settings files, publishing.
 | 2026-10-11 | Claude Code session | Live runs isolated with `--setting-sources project,local --strict-mcp-config`; the stream's init and rate-limit events are not kept | Keeps personal settings, connectors and account context out of the run and the record |
 | 2026-10-11 | Claude Code session | Second live scenario `regression` added | The `fix` run ended with fresh passing evidence, so the hook never had to block; the block path needed its own run |
 | 2026-10-11 | Claude Code session | Hook sets `sys.dont_write_bytecode` | The first live run left `.claude/harness/__pycache__/` in the project |
+| 2026-10-11 | Hasitha | Repository made public; topics set | Founder reply "make it public", after the article at hasithabandara.com/writing/build-the-harness-for-claude-code went live |
 
 ## Open items for the founder
 
-1. Make the repository public when you want the post to link to it.
+None.
