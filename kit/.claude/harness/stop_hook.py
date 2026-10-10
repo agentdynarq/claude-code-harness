@@ -36,6 +36,7 @@ from pathlib import Path
 
 HERE = Path(__file__).resolve().parent
 sys.path.insert(0, str(HERE))
+sys.dont_write_bytecode = True  # leave no __pycache__ in the user's .claude/harness
 import verify  # noqa: E402  (the runner that sits next to this file)
 
 DISABLE_VAR = "HARNESS_STOP_HOOK"

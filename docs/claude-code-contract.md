@@ -63,10 +63,22 @@ If Claude Code changes any of the facts below, the matching part of this kit nee
 | `.claude/settings.local.json` is personal; `.claude/settings.json` is shared; list settings such as `permissions.allow` merge across scopes | Where to put the hook entry |
 | `Edit` deny rules cover Claude's file tools and recognised Bash file commands, not arbitrary scripts; the sandbox is the OS-level control | Limits stated in the README |
 
-## Assumptions not verified in a live session
+## Checked in a live session
 
-- A Claude Code session will deliver the Stop payload exactly as documented. The hook's
-  parsing was tested with fixture payloads written from the documentation.
-- `python` resolves to Python 3.11 or newer on PATH in the environment Claude Code runs in.
-- The skill's `allowed-tools` rules match the commands Claude actually issues; Claude may
-  spell a path with backslashes on Windows, which would not match and would prompt.
+Two `claude -p` runs on Windows with Claude Code 2.1.296 (records in
+[`evidence/live-session`](evidence/live-session)) confirmed, for that setup:
+
+- The exec-form hook entry in `.claude/settings.local.json` ran, with
+  `${CLAUDE_PROJECT_DIR}` substituted, and `python` resolved on PATH.
+- The Stop payload parsed: `hook_event_name`, `session_id` and `stop_hook_active` as documented.
+- `{"decision": "block", "reason": ...}` kept the turn going, and the reason reached
+  Claude as text prefixed with "Stop hook feedback:".
+- A Stop with no output and exit 0 let Claude stop.
+
+## Still assumptions
+
+- The same behaviour on Linux and macOS in a live session.
+- The skill's `allowed-tools` rules match the commands Claude issues. The live runs also
+  passed `--allowedTools`, so they do not isolate the skill's rules. Claude may spell a
+  path with backslashes on Windows, which would not match and would prompt.
+- `python` resolves to Python 3.11 or newer wherever Claude Code runs.

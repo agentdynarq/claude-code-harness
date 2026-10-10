@@ -29,11 +29,16 @@ dangerous-command filter, automatic edits to settings files, publishing.
 | 2026-10-10 | Claude Code session | Installer only creates files (exclusive create), refuses on any conflict, records hashes, never edits settings | Smaller correct tool over a universal installer; removal can keep user edits |
 | 2026-10-10 | Claude Code session | Skill named `verified-change`, not `verify` | A project `verify` skill replaces the bundled `/verify` and changes commit instructions |
 | 2026-10-10 | Claude Code session | Template named `CLAUDE.template.md` | Claude Code loads `CLAUDE.md` files in subdirectories on demand |
-| 2026-10-11 | Claude Code session | Live Claude Code run (category C) not attempted from inside a Claude Code session | The CLI guards against nested sessions; the procedure is scripted in `scripts/live_session_check.py` for a normal terminal |
+| 2026-10-11 | Claude Code session | Live Claude Code run (category C) not attempted from inside a Claude Code session | Assumed the CLI blocks nested sessions. Not tested at the time; corrected below |
 | 2026-10-11 | Claude Code session | MIT licence, copyright "Dynarq" | Proposed default for an educational repository |
 | 2026-10-11 | Hasitha | Licence confirmed: MIT, copyright "Dynarq" | Founder reply "yes dynarq" |
 | 2026-10-11 | Hasitha | Run the live Claude Code check and publish to agentdynarq/claude-code-harness | Founder reply "okay run, push yourself" |
+| 2026-10-11 | Claude Code session | Repository created private, not public | The auto mode classifier refused a public repository without an explicit instruction; making it public is the founder's call |
+| 2026-10-11 | Claude Code session | Correction: `claude -p` does start inside a Claude Code session on 2.1.296 (tested with a 0.05 USD budget). The script's refusal was removed | The earlier assumption was never tested |
+| 2026-10-11 | Claude Code session | Live runs isolated with `--setting-sources project,local --strict-mcp-config`; the stream's init and rate-limit events are not kept | Keeps personal settings, connectors and account context out of the run and the record |
+| 2026-10-11 | Claude Code session | Second live scenario `regression` added | The `fix` run ended with fresh passing evidence, so the hook never had to block; the block path needed its own run |
+| 2026-10-11 | Claude Code session | Hook sets `sys.dont_write_bytecode` | The first live run left `.claude/harness/__pycache__/` in the project |
 
 ## Open items for the founder
 
-None at the time of the first push.
+1. Make the repository public when you want the post to link to it.

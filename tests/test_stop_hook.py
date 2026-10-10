@@ -124,6 +124,7 @@ class HookProcess(TempDirTest):
         (root / "src/app.py").write_text("changed\n", encoding="utf-8")
         self.hook(root, payload())
         self.assertEqual(counter.read_text().count("run"), 2, "changed source must run the checks again")
+        self.assertFalse((root / ".claude/harness/__pycache__").exists(), "the hook must not leave bytecode behind")
 
     def test_report_only_mode_never_blocks(self):
         root = self.failing_project(stop_hook_max_blocks=0)

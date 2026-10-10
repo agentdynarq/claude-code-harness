@@ -1,5 +1,5 @@
 # python310-refusal
-# recorded 2026-10-10T18:44:23+00:00 on Windows 11 (10.0.26200)
+# recorded 2026-10-10T19:10:19+00:00 on Windows 11 (10.0.26200)
 # interpreter: Python 3.10.20
 # working directory: <repo>/kit
 # command: <python 3.10> .claude/harness/verify.py

@@ -51,7 +51,10 @@ Everything that gets copied into a project lives in [`kit/`](kit/):
 
 Outside the kit: [`install.py`](install.py) (preview, install, remove),
 [`examples/invoice-totals`](examples/invoice-totals) (a project with a real bug),
-[`scripts/demo.py`](scripts/demo.py) (the walkthrough), and [`tests/`](tests).
+[`scripts/demo.py`](scripts/demo.py) (the walkthrough),
+[`scripts/live_session_check.py`](scripts/live_session_check.py) (records a real Claude Code
+session on the example), [`scripts/mutation_check.py`](scripts/mutation_check.py) (breaks the
+code on purpose and confirms a test notices), and [`tests/`](tests).
 
 ## Requirements
 
@@ -87,7 +90,7 @@ states the objective, scope, exclusions, 6 acceptance criteria and the verificat
 [`docs/evidence/2026-10-11-demo-windows-py313.txt`](docs/evidence/2026-10-11-demo-windows-py313.txt). `...` marks lines left out here.
 
 ```
-  FAILED         tests      required  exit 1  0.27s  <python> -m unittest discover -s tests -v
+  FAILED         tests      required  exit 1  0.16s  <python> -m unittest discover -s tests -v
       | AssertionError: Decimal('0.28') != Decimal('0.29')
       ...
       | AssertionError: Decimal('0.52') != Decimal('0.54')
@@ -115,7 +118,7 @@ RESULT   FAILED  (0 of 1 required checks passed)
 **4. The passing check**, then a freshness check against the current source:
 
 ```
-  PASSED         tests      required  exit 0  0.25s  <python> -m unittest discover -s tests -v
+  PASSED         tests      required  exit 0  0.14s  <python> -m unittest discover -s tests -v
 ...
 RESULT   PASSED  (1 of 1 required checks passed)
 
@@ -131,7 +134,7 @@ current   74eb229d6ac5
 
 ```
 evidence  STALE
-report    .claude/harness/evidence/latest.json (PASSED, finished 2026-10-10T18:44:16Z)
+report    .claude/harness/evidence/latest.json (PASSED, finished 2026-10-10T19:10:14Z)
 recorded  74eb229d6ac5
 current   2e1c003125f9
   modified  invoice_totals/totals.py
@@ -195,7 +198,7 @@ Files you edited, `checks.toml`, and `evidence/` stay.
 
 `checks.toml` lists commands as argument lists. They run without a shell, with a
 per-check timeout and a total budget. On timeout the whole process tree is terminated
-(tested on Windows, where a test confirms a grandchild process does not survive).
+(a test confirms a grandchild process does not survive; it passed on Windows, Linux and macOS).
 
 | Outcome | Meaning |
 | --- | --- |
@@ -267,13 +270,14 @@ Evidence is kept in [`docs/evidence`](docs/evidence), separated by kind:
 
 | Category | Status |
 | --- | --- |
-| A. Unit and integration tests, demo, deliberate-defect check | Ran on Windows 11, Python 3.13.12 and 3.11.17 |
+| A. Unit and integration tests, demo, deliberate-defect check | Locally on Windows 11 with Python 3.13 and 3.11, including the deliberate-defect check. In GitHub Actions on Ubuntu, macOS and Windows with Python 3.11 and 3.13: all tests and the demo passed, with one Windows-only test skipped off Windows |
 | B. Hook contract tests with fixture payloads | Ran on the same setups. Fixture payloads follow the documented Stop schema; they were not produced by Claude Code |
-| C. Real Claude Code session | **Not run.** Procedure: [`scripts/live_session_check.py`](scripts/live_session_check.py), described in [`docs/evidence/README.md`](docs/evidence/README.md) |
+| C. Real Claude Code session | 2 scenarios on Windows with Claude Code 2.1.296 and one model, recorded in [`docs/evidence/live-session`](docs/evidence/live-session). `fix`: the skill's workflow end to end, the hook reused a fresh pass. `regression`: Claude broke the tests and tried to stop, the hook blocked once, Claude received the failure and stopped to ask instead of weakening the tests. Two runs are examples, not a measurement |
 | D. Comparative effectiveness | **Not run.** No claim is made that this kit makes developers faster or Claude's code better |
 
-Linux and macOS have not been tested. The CI workflow in `.github/workflows` covers
-Ubuntu, Windows and macOS, but it has not run yet; a workflow file is not evidence.
+The GitHub Actions results are recorded in
+[`docs/evidence/2026-10-11-ci-run-38077766051.txt`](docs/evidence/2026-10-11-ci-run-38077766051.txt),
+extracted from the job logs. The deliberate-defect check ran on Windows only.
 
 The Claude Code facts this kit relies on, and where they come from, are in
 [`docs/claude-code-contract.md`](docs/claude-code-contract.md). They were checked
@@ -283,7 +287,8 @@ against the documentation on 10 Oct 2026 and Claude Code 2.1.296.
 
 - On Windows, processes a check leaves running after it exits normally are not cleaned
   up. On timeout the whole tree is killed with `taskkill /T`. On Linux and macOS each
-  check runs in its own session and leftovers are killed, but that path is untested.
+  check runs in its own session; the timeout test (a grandchild must not survive) passed
+  there in CI, but killing leftovers after a normal exit has no test.
 - `.cmd` and `.bat` commands on Windows run through `cmd.exe` by the operating system,
   so their arguments follow `cmd.exe` parsing.
 - Every Stop hashes the selected source files. On a large repository, narrow `[source] include`.

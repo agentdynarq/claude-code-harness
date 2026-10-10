@@ -1,5 +1,5 @@
 # tests-windows-py313
-# recorded 2026-10-10T18:43:07+00:00 on Windows 11 (10.0.26200)
+# recorded 2026-10-10T19:09:20+00:00 on Windows 11 (10.0.26200)
 # interpreter: Python 3.13.12
 # working directory: <repo>
 # command: <python 3.13> -m unittest discover -s tests -v
@@ -26,6 +26,10 @@ test_unreadable_manifest_is_refused (test_install.Remove.test_unreadable_manifes
 test_directory_link_inside_target_cannot_redirect_writes (test_install.StayInsideTarget.test_directory_link_inside_target_cannot_redirect_writes) ... ok
 test_relative_paths_that_escape_are_rejected (test_install.StayInsideTarget.test_relative_paths_that_escape_are_rejected) ... ok
 test_tampered_manifest_cannot_delete_outside_the_target (test_install.StayInsideTarget.test_tampered_manifest_cannot_delete_outside_the_target) ... ok
+test_init_and_rate_limit_events_are_dropped (test_live_record.PublicStream.test_init_and_rate_limit_events_are_dropped) ... ok
+test_a_stray_user_name_is_replaced (test_live_record.Sanitise.test_a_stray_user_name_is_replaced) ... ok
+test_every_spelling_of_local_paths_is_replaced (test_live_record.Sanitise.test_every_spelling_of_local_paths_is_replaced) ... ok
+test_project_label_wins_over_home (test_live_record.Sanitise.test_project_label_wins_over_home) ... ok
 test_instruction_files_stay_short (test_repo_text.RepositoryText.test_instruction_files_stay_short) ... ok
 test_no_em_or_en_dashes (test_repo_text.RepositoryText.test_no_em_or_en_dashes) ... ok
 test_no_file_named_claude_md_inside_the_kit (test_repo_text.RepositoryText.test_no_file_named_claude_md_inside_the_kit) ... ok
@@ -83,6 +87,6 @@ test_timeout_is_reported_and_the_process_tree_is_killed (test_verify.Timeouts.te
 test_total_budget_skips_checks_that_cannot_start (test_verify.Timeouts.test_total_budget_skips_checks_that_cannot_start) ... ok
 
 ----------------------------------------------------------------------
-Ran 74 tests in 35.351s
+Ran 78 tests in 24.894s
 
 OK

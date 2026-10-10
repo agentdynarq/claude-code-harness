@@ -1,5 +1,5 @@
 # demo-windows-py311
-# recorded 2026-10-10T18:44:18+00:00 on Windows 11 (10.0.26200)
+# recorded 2026-10-10T19:10:15+00:00 on Windows 11 (10.0.26200)
 # interpreter: Python 3.11.17
 # working directory: <repo>
 # command: <python 3.11> scripts/demo.py
@@ -74,7 +74,7 @@ root     <project>
 config   .claude/harness/checks.toml
 source   2e1c003125f9 (3 files)
 
-  FAILED         tests      required  exit 1  0.25s  <python> -m unittest discover -s tests -v
+  FAILED         tests      required  exit 1  0.19s  <python> -m unittest discover -s tests -v
       |     self.assertEqual(totals.vat, Decimal("0.29"))
       | AssertionError: Decimal('0.28') != Decimal('0.29')
       | 
@@ -129,7 +129,7 @@ root     <project>
 config   .claude/harness/checks.toml
 source   74eb229d6ac5 (3 files)
 
-  PASSED         tests      required  exit 0  0.20s  <python> -m unittest discover -s tests -v
+  PASSED         tests      required  exit 0  0.19s  <python> -m unittest discover -s tests -v
   SKIPPED        typecheck  optional
       not run: mypy is not a dependency of this example; set enabled = true where it is installed
 
@@ -141,7 +141,7 @@ report   .claude/harness/evidence/latest.json
 == 7. Ask whether that evidence still applies to the current source
 $ <python> "<project>\.claude\harness\verify.py" status
 evidence  FRESH
-report    .claude/harness/evidence/latest.json (PASSED, finished 2026-10-10T18:44:20Z)
+report    .claude/harness/evidence/latest.json (PASSED, finished 2026-10-10T19:10:17Z)
 recorded  74eb229d6ac5
 current   74eb229d6ac5
 [exit 0]
@@ -150,7 +150,7 @@ current   74eb229d6ac5
 == 8. Change a file outside the configured source (CLAUDE.md)
 $ <python> "<project>\.claude\harness\verify.py" status
 evidence  FRESH
-report    .claude/harness/evidence/latest.json (PASSED, finished 2026-10-10T18:44:20Z)
+report    .claude/harness/evidence/latest.json (PASSED, finished 2026-10-10T19:10:17Z)
 recorded  74eb229d6ac5
 current   74eb229d6ac5
 [exit 0]
@@ -180,7 +180,7 @@ current   74eb229d6ac5
      return Totals(net=net.quantize(CENT), vat=vat.quantize(CENT), gross=(net + vat).quantize(CENT))
 $ <python> "<project>\.claude\harness\verify.py" status
 evidence  STALE
-report    .claude/harness/evidence/latest.json (PASSED, finished 2026-10-10T18:44:20Z)
+report    .claude/harness/evidence/latest.json (PASSED, finished 2026-10-10T19:10:17Z)
 recorded  74eb229d6ac5
 current   2e1c003125f9
   modified  invoice_totals/totals.py
@@ -195,7 +195,7 @@ root     <project>
 config   .claude/harness/checks.toml
 source   2e1c003125f9 (3 files)
 
-  FAILED         tests      required  exit 1  0.25s  <python> -m unittest discover -s tests -v
+  FAILED         tests      required  exit 1  0.17s  <python> -m unittest discover -s tests -v
       |     self.assertEqual(totals.vat, Decimal("0.29"))
       | AssertionError: Decimal('0.28') != Decimal('0.29')
       | 
@@ -208,7 +208,7 @@ source   2e1c003125f9 (3 files)
       | AssertionError: Decimal('0.52') != Decimal('0.54')
       | 
       | ----------------------------------------------------------------------
-      | Ran 5 tests in 0.002s
+      | Ran 5 tests in 0.003s
       | 
       | FAILED (failures=2)
   SKIPPED        typecheck  optional
@@ -250,7 +250,7 @@ stdout JSON, one field per block:
       | AssertionError: Decimal('0.52') != Decimal('0.54')
       | 
       | ----------------------------------------------------------------------
-      | Ran 5 tests in 0.002s
+      | Ran 5 tests in 0.003s
       | 
       | FAILED (failures=2)
       log: .claude/harness/evidence/logs/check-tests.log

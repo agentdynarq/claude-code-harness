@@ -18,6 +18,7 @@ runner and an optional Stop hook. This file is for working on the kit itself.
 - Tests: `python -m unittest discover -s tests`
 - Walkthrough: `python scripts/demo.py`
 - Deliberate defects (slow, about 2 minutes): `python scripts/mutation_check.py`
+- Live Claude Code record (uses your login, costs usage): `python scripts/live_session_check.py --run --scenario fix`
 
 ## Handle with care
 - `kit/.claude/harness/stop_hook.py` and `verify.py`: behaviour is documented in the
