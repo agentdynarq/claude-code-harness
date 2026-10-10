@@ -1,0 +1,33 @@
+# mutation-check-windows-py313
+# recorded 2026-10-10T18:44:30+00:00 on Windows 11 (10.0.26200)
+# interpreter: Python 3.13.12
+# working directory: <repo>
+# command: <python 3.13> scripts/mutation_check.py
+# exit code: 0
+# paths under the home directory are shown as ~
+Applying 23 deliberate defect(s), each in a fresh temporary copy.
+ 1. caught      timeout leaves the process tree running  ->  test_verify.Timeouts.test_timeout_is_reported_and_the_process_tree_is_killed
+ 2. caught      redaction does nothing  ->  test_verify.SecretsAndOutput.test_secret_environment_values_are_redacted_from_report_and_log
+ 3. caught      overall ignores required results  ->  test_verify.RunOutcomes.test_required_check_fails_and_exit_code_is_preserved
+ 4. caught      real exit code replaced by 1  ->  test_verify.RunOutcomes.test_required_check_fails_and_exit_code_is_preserved
+ 5. caught      required check without a table is ignored  ->  test_verify.RunOutcomes.test_required_check_absent_fails_overall
+ 6. caught      fingerprint ignores file content  ->  test_verify.Evidence.test_evidence_becomes_stale_after_a_relevant_change
+ 7. caught      fingerprint ignores the checks configuration  ->  test_verify.Evidence.test_changing_the_checks_makes_evidence_stale
+ 8. caught      shell string commands accepted  ->  test_verify.Configuration.test_shell_string_command_is_rejected
+ 9. caught      hook ignores its retry limit  ->  test_stop_hook.HookProcess.test_retries_are_bounded_while_claude_keeps_changing_code
+10. caught      hook blocks the same unchanged failure again  ->  test_stop_hook.HookProcess.test_unchanged_failure_is_not_blocked_twice_even_on_a_new_turn
+11. caught      hook exits 2 on an internal error  ->  test_stop_hook.HookProcess.test_internal_error_exits_1_never_2
+12. caught      hook reads stdin in the console code page  ->  test_stop_hook.HookProcess.test_unicode_payload_is_read_as_utf8
+13. caught      hook accepts any event  ->  test_stop_hook.HookProcess.test_wrong_event_or_fields_are_rejected
+14. caught      hook blocks when the configuration is missing  ->  test_stop_hook.HookProcess.test_missing_configuration_is_reported_and_does_not_block
+15. caught      hook reuses evidence after the source changed  ->  test_stop_hook.HookProcess.test_passing_checks_allow_stop_and_unchanged_source_reuses_evidence
+16. caught      installer follows links out of the target  ->  test_install.StayInsideTarget.test_directory_link_inside_target_cannot_redirect_writes
+17. caught      installer allows '..' segments  ->  test_install.StayInsideTarget.test_relative_paths_that_escape_are_rejected
+18. caught      installer overwrites conflicting files  ->  test_install.Install.test_conflicting_file_refuses_the_whole_install
+19. caught      installer ignores --dry-run  ->  test_install.Install.test_dry_run_writes_nothing
+20. caught      removal deletes modified files  ->  test_install.Remove.test_removal_keeps_user_modified_and_user_created_files
+21. caught      an em dash in the README  ->  test_repo_text.RepositoryText.test_no_em_or_en_dashes
+22. caught      an unresolved template marker in the example  ->  test_repo_text.RepositoryText.test_templates_are_marked_and_nothing_else_is_unfinished
+23. caught      example test no longer exposes the bug  ->  test_demo.Walkthrough.test_demo_meets_every_expectation_and_leaves_the_repository_alone
+
+23 of 23 defects caught by the named test.

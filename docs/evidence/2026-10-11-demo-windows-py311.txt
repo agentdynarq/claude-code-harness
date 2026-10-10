@@ -1,0 +1,272 @@
+# demo-windows-py311
+# recorded 2026-10-10T18:44:18+00:00 on Windows 11 (10.0.26200)
+# interpreter: Python 3.11.17
+# working directory: <repo>
+# command: <python 3.11> scripts/demo.py
+# exit code: 0
+# paths under the home directory are shown as ~
+claude-code-harness demo. Python 3.11.17 on win32.
+Every command below really runs. <project> is a temporary copy of examples/invoice-totals.
+
+== 1. Copy the example project to a temporary directory
+   .claude/harness/checks.toml
+   CLAUDE.md
+   docs/tasks/fix-vat-rounding.md
+   invoice_totals/__init__.py
+   invoice_totals/totals.py
+   tests/test_totals.py
+
+== 2. Preview the kit installation, then install
+$ <python> <repo>\install.py install "<project>" --dry-run
+claude-code-harness 0.1.0: install into <project>
+  create        .claude/harness/README.md
+  create        .claude/harness/checks.example.toml
+  create        .claude/harness/hook-settings.example.json
+  create        .claude/harness/stop_hook.py
+  create        .claude/harness/templates/CLAUDE.template.md
+  create        .claude/harness/templates/handoff.md
+  create        .claude/harness/templates/task-brief.md
+  create        .claude/harness/verify.py
+  create        .claude/skills/verified-change/SKILL.md
+
+Dry run: nothing was written.
+[exit 0]
+   ok: dry run exits 0 and writes nothing
+   ok: verify.py is absent after the dry run
+$ <python> <repo>\install.py install "<project>"
+claude-code-harness 0.1.0: install into <project>
+  create        .claude/harness/README.md
+  create        .claude/harness/checks.example.toml
+  create        .claude/harness/hook-settings.example.json
+  create        .claude/harness/stop_hook.py
+  create        .claude/harness/templates/CLAUDE.template.md
+  create        .claude/harness/templates/handoff.md
+  create        .claude/harness/templates/task-brief.md
+  create        .claude/harness/verify.py
+  create        .claude/skills/verified-change/SKILL.md
+
+Installed 9 file(s). Recorded in .claude/harness/install-manifest.json.
+
+Next steps. None of these has been done for you, and no project command was run:
+  1. Run the checks yourself once: python .claude/harness/verify.py
+  2. CLAUDE.md exists and was not changed. To tie it to the checks, you could add to its definition of done: `python .claude/harness/verify.py` reports PASSED.
+  3. Optional Stop hook: read .claude/harness/hook-settings.example.json, then merge its entry by hand into .claude/settings.local.json (you) or .claude/settings.json (shared).
+[exit 0]
+   ok: install exits 0
+   ok: the project's own CLAUDE.md and checks.toml are byte-for-byte unchanged
+
+== 3. The task and its acceptance criteria (docs/tasks/fix-vat-rounding.md)
+VAT for each rate must round half a cent away from zero, as `CLAUDE.md` requires.
+`invoice_totals()` currently uses Python's `round()`, which rounds half to even on
+`Decimal`, so 1.50 net at 19% gives 0.28 VAT instead of 0.29.
+
+1. 1.50 net at 19% gives VAT 0.29 and gross 1.79.
+2. 3.50 at 7% plus 1.50 at 19% gives VAT 0.54 and gross 5.54.
+3. 2 x 10.00 at 19% still gives VAT 3.80 and gross 23.80.
+4. 3 lines of 0.04 at 19% still give VAT 0.02 (summed per rate before rounding).
+5. A quantity of 0 or below still raises `ValueError`.
+6. `python .claude/harness/verify.py` reports PASSED and `status` reports FRESH evidence.
+
+== 4. Run the required checks before changing anything
+$ <python> "<project>\.claude\harness\verify.py"
+claude-code-harness verify 0.1.0
+root     <project>
+config   .claude/harness/checks.toml
+source   2e1c003125f9 (3 files)
+
+  FAILED         tests      required  exit 1  0.25s  <python> -m unittest discover -s tests -v
+      |     self.assertEqual(totals.vat, Decimal("0.29"))
+      | AssertionError: Decimal('0.28') != Decimal('0.29')
+      | 
+      | ======================================================================
+      | FAIL: test_vat_is_rounded_per_rate (test_totals.InvoiceTotalsTest.test_vat_is_rounded_per_rate)
+      | ----------------------------------------------------------------------
+      | Traceback (most recent call last):
+      |   File "<project>\tests\test_totals.py", line 29, in test_vat_is_rounded_per_rate
+      |     self.assertEqual(totals.vat, Decimal("0.54"))
+      | AssertionError: Decimal('0.52') != Decimal('0.54')
+      | 
+      | ----------------------------------------------------------------------
+      | Ran 5 tests in 0.002s
+      | 
+      | FAILED (failures=2)
+  SKIPPED        typecheck  optional
+      not run: mypy is not a dependency of this example; set enabled = true where it is installed
+
+RESULT   FAILED  (0 of 1 required checks passed)
+report   .claude/harness/evidence/latest.json
+[exit 1]
+   ok: verify exits 1 because a required check failed
+   ok: the failure is the half-cent rounding bug
+
+== 5. Apply the fix the brief asks for
+--- a/invoice_totals/totals.py
++++ b/invoice_totals/totals.py
+@@ -6,7 +6,7 @@
+ from __future__ import annotations
+ 
+ from dataclasses import dataclass
+-from decimal import Decimal
++from decimal import ROUND_HALF_UP, Decimal
+ 
+ CENT = Decimal("0.01")
+ 
+@@ -35,5 +35,8 @@
+         net_by_rate[line.vat_rate] = net_by_rate.get(line.vat_rate, Decimal("0")) + line.unit_price * line.quantity
+ 
+     net = sum(net_by_rate.values(), Decimal("0"))
+-    vat = sum((round(amount * rate, 2) for rate, amount in net_by_rate.items()), Decimal("0"))
++    vat = sum(
++        ((amount * rate).quantize(CENT, rounding=ROUND_HALF_UP) for rate, amount in net_by_rate.items()),
++        Decimal("0"),
++    )
+     return Totals(net=net.quantize(CENT), vat=vat.quantize(CENT), gross=(net + vat).quantize(CENT))
+
+== 6. Run the checks again
+$ <python> "<project>\.claude\harness\verify.py"
+claude-code-harness verify 0.1.0
+root     <project>
+config   .claude/harness/checks.toml
+source   74eb229d6ac5 (3 files)
+
+  PASSED         tests      required  exit 0  0.20s  <python> -m unittest discover -s tests -v
+  SKIPPED        typecheck  optional
+      not run: mypy is not a dependency of this example; set enabled = true where it is installed
+
+RESULT   PASSED  (1 of 1 required checks passed)
+report   .claude/harness/evidence/latest.json
+[exit 0]
+   ok: verify exits 0 and reports PASSED
+
+== 7. Ask whether that evidence still applies to the current source
+$ <python> "<project>\.claude\harness\verify.py" status
+evidence  FRESH
+report    .claude/harness/evidence/latest.json (PASSED, finished 2026-10-10T18:44:20Z)
+recorded  74eb229d6ac5
+current   74eb229d6ac5
+[exit 0]
+   ok: status reports FRESH (exit 0)
+
+== 8. Change a file outside the configured source (CLAUDE.md)
+$ <python> "<project>\.claude\harness\verify.py" status
+evidence  FRESH
+report    .claude/harness/evidence/latest.json (PASSED, finished 2026-10-10T18:44:20Z)
+recorded  74eb229d6ac5
+current   74eb229d6ac5
+[exit 0]
+   ok: status is still FRESH: CLAUDE.md is not in [source] include
+
+== 9. Deliberately reintroduce the bug
+--- a/invoice_totals/totals.py
++++ b/invoice_totals/totals.py
+@@ -6,7 +6,7 @@
+ from __future__ import annotations
+ 
+ from dataclasses import dataclass
+-from decimal import ROUND_HALF_UP, Decimal
++from decimal import Decimal
+ 
+ CENT = Decimal("0.01")
+ 
+@@ -35,8 +35,5 @@
+         net_by_rate[line.vat_rate] = net_by_rate.get(line.vat_rate, Decimal("0")) + line.unit_price * line.quantity
+ 
+     net = sum(net_by_rate.values(), Decimal("0"))
+-    vat = sum(
+-        ((amount * rate).quantize(CENT, rounding=ROUND_HALF_UP) for rate, amount in net_by_rate.items()),
+-        Decimal("0"),
+-    )
++    vat = sum((round(amount * rate, 2) for rate, amount in net_by_rate.items()), Decimal("0"))
+     return Totals(net=net.quantize(CENT), vat=vat.quantize(CENT), gross=(net + vat).quantize(CENT))
+$ <python> "<project>\.claude\harness\verify.py" status
+evidence  STALE
+report    .claude/harness/evidence/latest.json (PASSED, finished 2026-10-10T18:44:20Z)
+recorded  74eb229d6ac5
+current   2e1c003125f9
+  modified  invoice_totals/totals.py
+The recorded result does not apply to the current source. Run verify.py again.
+[exit 3]
+   ok: status reports STALE (exit 3) and names the changed file; the earlier pass no longer counts
+
+== 10. Run the checks on the reintroduced bug
+$ <python> "<project>\.claude\harness\verify.py"
+claude-code-harness verify 0.1.0
+root     <project>
+config   .claude/harness/checks.toml
+source   2e1c003125f9 (3 files)
+
+  FAILED         tests      required  exit 1  0.25s  <python> -m unittest discover -s tests -v
+      |     self.assertEqual(totals.vat, Decimal("0.29"))
+      | AssertionError: Decimal('0.28') != Decimal('0.29')
+      | 
+      | ======================================================================
+      | FAIL: test_vat_is_rounded_per_rate (test_totals.InvoiceTotalsTest.test_vat_is_rounded_per_rate)
+      | ----------------------------------------------------------------------
+      | Traceback (most recent call last):
+      |   File "<project>\tests\test_totals.py", line 29, in test_vat_is_rounded_per_rate
+      |     self.assertEqual(totals.vat, Decimal("0.54"))
+      | AssertionError: Decimal('0.52') != Decimal('0.54')
+      | 
+      | ----------------------------------------------------------------------
+      | Ran 5 tests in 0.002s
+      | 
+      | FAILED (failures=2)
+  SKIPPED        typecheck  optional
+      not run: mypy is not a dependency of this example; set enabled = true where it is installed
+
+RESULT   FAILED  (0 of 1 required checks passed)
+report   .claude/harness/evidence/latest.json
+[exit 1]
+   ok: verify fails again (exit 1): the test catches the regression
+
+== 11. Stop hook with fixture payloads (written by this script, not by Claude Code)
+$ <python> "<project>\.claude\harness\stop_hook.py"   (stdin: fixture payload)
+stdout JSON, one field per block:
+  decision:
+    block
+  reason:
+    claude-code-harness: required checks did not pass, so this turn was not allowed to end (automatic retry 1 of 2).
+    Source state 2e1c003125f9. Full report: .claude/harness/evidence/latest.json
+    
+    tests: FAILED, exit code 1
+      | test_quantity_below_one_is_rejected (test_totals.InvoiceTotalsTest.test_quantity_below_one_is_rejected) ... ok
+      | test_vat_is_rounded_per_rate (test_totals.InvoiceTotalsTest.test_vat_is_rounded_per_rate) ... FAIL
+      | test_whole_cent_vat (test_totals.InvoiceTotalsTest.test_whole_cent_vat) ... ok
+      | 
+      | ======================================================================
+      | FAIL: test_half_cent_vat_rounds_away_from_zero (test_totals.InvoiceTotalsTest.test_half_cent_vat_rounds_away_from_zero)
+      | ----------------------------------------------------------------------
+      | Traceback (most recent call last):
+      |   File "<project>\tests\test_totals.py", line 23, in test_half_cent_vat_rounds_away_from_zero
+      |     self.assertEqual(totals.vat, Decimal("0.29"))
+      | AssertionError: Decimal('0.28') != Decimal('0.29')
+      | 
+      | ======================================================================
+      | FAIL: test_vat_is_rounded_per_rate (test_totals.InvoiceTotalsTest.test_vat_is_rounded_per_rate)
+      | ----------------------------------------------------------------------
+      | Traceback (most recent call last):
+      |   File "<project>\tests\test_totals.py", line 29, in test_vat_is_rounded_per_rate
+      |     self.assertEqual(totals.vat, Decimal("0.54"))
+      | AssertionError: Decimal('0.52') != Decimal('0.54')
+      | 
+      | ----------------------------------------------------------------------
+      | Ran 5 tests in 0.002s
+      | 
+      | FAILED (failures=2)
+      log: .claude/harness/evidence/logs/check-tests.log
+    
+    If your change caused this, fix the cause and finish your turn again; the checks rerun automatically. Do not weaken tests, edit .claude/harness/checks.toml or turn off this hook to get a pass. If the failure is unrelated to your task or you cannot fix it within scope, stop and tell the user which check failed and why.
+[exit 0]
+   ok: first stop: exit 0 with decision=block and the failing check in the reason
+$ <python> "<project>\.claude\harness\stop_hook.py"   (stdin: fixture payload)
+stdout JSON, one field per block:
+  systemMessage:
+    claude-code-harness: required checks still not passing (tests FAILED). The source is unchanged since Claude was told, so Claude was allowed to stop. Report: .claude/harness/evidence/latest.json
+[exit 0]
+   ok: second stop with no source change: not blocked again, user is told why
+$ <python> "<project>\.claude\harness\stop_hook.py"   (stdin: fixture payload)
+claude-code-harness stop hook: stdin is not valid JSON (Expecting property name enclosed in double quotes at line 1 column 2)
+[exit 1]
+   ok: malformed payload: exit 1 (non-blocking error), nothing on stdout
+
+All 14 expectations met.

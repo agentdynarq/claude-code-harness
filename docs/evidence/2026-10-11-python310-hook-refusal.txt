@@ -1,0 +1,10 @@
+# python310-hook-refusal
+# recorded 2026-10-10T18:44:23+00:00 on Windows 11 (10.0.26200)
+# interpreter: Python 3.10.20
+# working directory: <repo>/kit
+# command: <python 3.10> .claude/harness/stop_hook.py
+# exit code: 1
+# paths under the home directory are shown as ~
+
+--- stderr ---
+claude-code-harness stop hook: Python 3.11 or newer is required; checks did not run.

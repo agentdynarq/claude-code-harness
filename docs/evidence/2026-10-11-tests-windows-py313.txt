@@ -1,0 +1,88 @@
+# tests-windows-py313
+# recorded 2026-10-10T18:43:07+00:00 on Windows 11 (10.0.26200)
+# interpreter: Python 3.13.12
+# working directory: <repo>
+# command: <python 3.13> -m unittest discover -s tests -v
+# exit code: 0
+# paths under the home directory are shown as ~
+
+--- stderr ---
+test_demo_meets_every_expectation_and_leaves_the_repository_alone (test_demo.Walkthrough.test_demo_meets_every_expectation_and_leaves_the_repository_alone) ... ok
+test_command_line_entry_point_runs_as_a_script (test_install.Install.test_command_line_entry_point_runs_as_a_script) ... ok
+test_conflicting_file_refuses_the_whole_install (test_install.Install.test_conflicting_file_refuses_the_whole_install) ... ok
+test_dry_run_writes_nothing (test_install.Install.test_dry_run_writes_nothing) ... ok
+test_existing_claude_md_settings_and_hooks_are_untouched (test_install.Install.test_existing_claude_md_settings_and_hooks_are_untouched) ... ok
+test_file_where_a_directory_is_needed_is_a_conflict (test_install.Install.test_file_where_a_directory_is_needed_is_a_conflict) ... ok
+test_install_copies_the_kit_and_tracks_what_it_added (test_install.Install.test_install_copies_the_kit_and_tracks_what_it_added) ... ok
+test_kit_is_small_and_contains_the_expected_parts (test_install.Install.test_kit_is_small_and_contains_the_expected_parts) ... ok
+test_repeated_install_is_idempotent (test_install.Install.test_repeated_install_is_idempotent) ... ok
+test_target_is_required_and_must_be_a_directory (test_install.Install.test_target_is_required_and_must_be_a_directory) ... ok
+test_target_path_with_spaces (test_install.Install.test_target_path_with_spaces) ... ok
+test_clean_removal_restores_the_original_tree (test_install.Remove.test_clean_removal_restores_the_original_tree) ... ok
+test_dry_run_deletes_nothing (test_install.Remove.test_dry_run_deletes_nothing) ... ok
+test_removal_keeps_user_modified_and_user_created_files (test_install.Remove.test_removal_keeps_user_modified_and_user_created_files) ... ok
+test_remove_without_manifest_does_nothing (test_install.Remove.test_remove_without_manifest_does_nothing) ... ok
+test_unreadable_manifest_is_refused (test_install.Remove.test_unreadable_manifest_is_refused) ... ok
+test_directory_link_inside_target_cannot_redirect_writes (test_install.StayInsideTarget.test_directory_link_inside_target_cannot_redirect_writes) ... ok
+test_relative_paths_that_escape_are_rejected (test_install.StayInsideTarget.test_relative_paths_that_escape_are_rejected) ... ok
+test_tampered_manifest_cannot_delete_outside_the_target (test_install.StayInsideTarget.test_tampered_manifest_cannot_delete_outside_the_target) ... ok
+test_instruction_files_stay_short (test_repo_text.RepositoryText.test_instruction_files_stay_short) ... ok
+test_no_em_or_en_dashes (test_repo_text.RepositoryText.test_no_em_or_en_dashes) ... ok
+test_no_file_named_claude_md_inside_the_kit (test_repo_text.RepositoryText.test_no_file_named_claude_md_inside_the_kit) ... ok
+test_skill_frontmatter (test_repo_text.RepositoryText.test_skill_frontmatter) ... ok
+test_templates_are_marked_and_nothing_else_is_unfinished (test_repo_text.RepositoryText.test_templates_are_marked_and_nothing_else_is_unfinished) ... ok
+test_a_different_session_starts_clean (test_stop_hook.DecideLogic.test_a_different_session_starts_clean) ... ok
+test_explicit_false_resets_the_count (test_stop_hook.DecideLogic.test_explicit_false_resets_the_count) ... ok
+test_missing_stop_hook_active_does_not_reset_the_count (test_stop_hook.DecideLogic.test_missing_stop_hook_active_does_not_reset_the_count) ... ok
+test_owner_decisions_are_flagged_in_the_reason (test_stop_hook.DecideLogic.test_owner_decisions_are_flagged_in_the_reason) ... ok
+test_pass_clears_state_and_is_silent_when_evidence_was_reused (test_stop_hook.DecideLogic.test_pass_clears_state_and_is_silent_when_evidence_was_reused) ... ok
+test_reason_stays_within_the_documented_10000_character_cap (test_stop_hook.DecideLogic.test_reason_stays_within_the_documented_10000_character_cap) ... ok
+test_a_new_turn_with_new_changes_gets_a_fresh_budget (test_stop_hook.HookProcess.test_a_new_turn_with_new_changes_gets_a_fresh_budget) ... ok
+test_environment_switch_disables_the_hook (test_stop_hook.HookProcess.test_environment_switch_disables_the_hook) ... ok
+test_failing_check_blocks_with_the_failure_in_the_reason (test_stop_hook.HookProcess.test_failing_check_blocks_with_the_failure_in_the_reason) ... ok
+test_internal_error_exits_1_never_2 (test_stop_hook.HookProcess.test_internal_error_exits_1_never_2) ... ok
+test_invalid_configuration_is_reported_and_does_not_block (test_stop_hook.HookProcess.test_invalid_configuration_is_reported_and_does_not_block) ... ok
+test_malformed_json_is_a_non_blocking_error (test_stop_hook.HookProcess.test_malformed_json_is_a_non_blocking_error) ... ok
+test_missing_configuration_is_reported_and_does_not_block (test_stop_hook.HookProcess.test_missing_configuration_is_reported_and_does_not_block) ... ok
+test_passing_checks_allow_stop_and_unchanged_source_reuses_evidence (test_stop_hook.HookProcess.test_passing_checks_allow_stop_and_unchanged_source_reuses_evidence) ... ok
+test_report_only_mode_never_blocks (test_stop_hook.HookProcess.test_report_only_mode_never_blocks) ... ok
+test_retries_are_bounded_while_claude_keeps_changing_code (test_stop_hook.HookProcess.test_retries_are_bounded_while_claude_keeps_changing_code) ... ok
+test_unchanged_failure_is_not_blocked_twice_even_on_a_new_turn (test_stop_hook.HookProcess.test_unchanged_failure_is_not_blocked_twice_even_on_a_new_turn) ... ok
+test_unicode_payload_is_read_as_utf8 (test_stop_hook.HookProcess.test_unicode_payload_is_read_as_utf8) ... ok
+test_wrong_event_or_fields_are_rejected (test_stop_hook.HookProcess.test_wrong_event_or_fields_are_rejected) ... ok
+test_example_settings_match_the_documented_hook_shape (test_stop_hook.SettingsSnippet.test_example_settings_match_the_documented_hook_shape) ... ok
+test_absolute_cwd_is_rejected (test_verify.Configuration.test_absolute_cwd_is_rejected) ... ok
+test_empty_required_is_rejected (test_verify.Configuration.test_empty_required_is_rejected) ... ok
+test_malformed_toml (test_verify.Configuration.test_malformed_toml) ... ok
+test_missing_configuration (test_verify.Configuration.test_missing_configuration) ... ok
+test_shell_string_command_is_rejected (test_verify.Configuration.test_shell_string_command_is_rejected) ... ok
+test_unknown_key_is_rejected (test_verify.Configuration.test_unknown_key_is_rejected) ... ok
+test_added_and_removed_files_make_evidence_stale (test_verify.Evidence.test_added_and_removed_files_make_evidence_stale) ... ok
+test_change_outside_the_selected_source_keeps_evidence_fresh (test_verify.Evidence.test_change_outside_the_selected_source_keeps_evidence_fresh) ... ok
+test_changing_the_checks_makes_evidence_stale (test_verify.Evidence.test_changing_the_checks_makes_evidence_stale) ... ok
+test_evidence_and_caches_are_not_part_of_the_source (test_verify.Evidence.test_evidence_and_caches_are_not_part_of_the_source) ... ok
+test_evidence_becomes_stale_after_a_relevant_change (test_verify.Evidence.test_evidence_becomes_stale_after_a_relevant_change) ... ok
+test_fresh_failure_is_exit_1 (test_verify.Evidence.test_fresh_failure_is_exit_1) ... ok
+test_no_evidence_yet (test_verify.Evidence.test_no_evidence_yet) ... ok
+test_source_changed_by_the_check_itself_is_flagged (test_verify.Evidence.test_source_changed_by_the_check_itself_is_flagged) ... ok
+test_disabled_check_is_skipped_and_a_skipped_required_check_fails (test_verify.RunOutcomes.test_disabled_check_is_skipped_and_a_skipped_required_check_fails) ... ok
+test_missing_executable_is_a_failure_with_a_reason (test_verify.RunOutcomes.test_missing_executable_is_a_failure_with_a_reason) ... ok
+test_optional_failure_does_not_decide_overall (test_verify.RunOutcomes.test_optional_failure_does_not_decide_overall) ... ok
+test_python_token_runs_the_current_interpreter (test_verify.RunOutcomes.test_python_token_runs_the_current_interpreter) ... ok
+test_required_check_absent_fails_overall (test_verify.RunOutcomes.test_required_check_absent_fails_overall) ... ok
+test_required_check_declared_without_command_is_not_configured (test_verify.RunOutcomes.test_required_check_declared_without_command_is_not_configured) ... ok
+test_required_check_fails_and_exit_code_is_preserved (test_verify.RunOutcomes.test_required_check_fails_and_exit_code_is_preserved) ... ok
+test_required_check_succeeds (test_verify.RunOutcomes.test_required_check_succeeds) ... ok
+test_windows_cmd_file_exit_code_is_preserved (test_verify.RunOutcomes.test_windows_cmd_file_exit_code_is_preserved) ... ok
+test_working_directory_and_paths_with_spaces (test_verify.RunOutcomes.test_working_directory_and_paths_with_spaces) ... ok
+test_working_directory_outside_root_is_refused (test_verify.RunOutcomes.test_working_directory_outside_root_is_refused) ... ok
+test_large_output_is_bounded (test_verify.SecretsAndOutput.test_large_output_is_bounded) ... ok
+test_non_utf8_and_non_ascii_output_does_not_break_the_run (test_verify.SecretsAndOutput.test_non_utf8_and_non_ascii_output_does_not_break_the_run) ... ok
+test_secret_environment_values_are_redacted_from_report_and_log (test_verify.SecretsAndOutput.test_secret_environment_values_are_redacted_from_report_and_log) ... ok
+test_timeout_is_reported_and_the_process_tree_is_killed (test_verify.Timeouts.test_timeout_is_reported_and_the_process_tree_is_killed) ... ok
+test_total_budget_skips_checks_that_cannot_start (test_verify.Timeouts.test_total_budget_skips_checks_that_cannot_start) ... ok
+
+----------------------------------------------------------------------
+Ran 74 tests in 35.351s
+
+OK

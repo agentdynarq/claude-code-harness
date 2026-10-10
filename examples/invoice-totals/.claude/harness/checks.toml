@@ -1,0 +1,20 @@
+# Checks for the invoice-totals example. verify.py executes every enabled command here.
+
+required = ["tests"]
+
+[settings]
+total_timeout_seconds = 120
+default_timeout_seconds = 60
+stop_hook_max_blocks = 2
+
+[source]
+include = ["invoice_totals/*", "tests/*"]
+
+[checks.tests]
+command = ["{python}", "-m", "unittest", "discover", "-s", "tests", "-v"]
+timeout_seconds = 60
+
+[checks.typecheck]
+command = ["mypy", "invoice_totals"]
+enabled = false
+reason = "mypy is not a dependency of this example; set enabled = true where it is installed"

@@ -1,0 +1,46 @@
+# claude-code-harness checks configuration: EXAMPLE.
+#
+# Copy this file to checks.toml in the same directory, then list the commands this
+# project already uses. verify.py runs every enabled command listed in checks.toml,
+# and so does the optional Stop hook when Claude ends a turn.
+#
+# Configuring a command authorises its execution with your user permissions.
+# This file is not a sandbox. Do not put secrets in commands; use environment variables.
+#
+# Commands are argument lists and run without a shell: ["npm", "test"], not "npm test".
+# "{python}" as the first element means the Python interpreter that runs verify.py.
+# If you need shell features, call the shell explicitly, for example ["bash", "-c", "..."].
+
+# Checks that must pass for an overall PASSED. A name listed here without a
+# [checks.<name>] table, or without a command, is reported as NOT CONFIGURED and fails.
+required = ["tests"]
+
+[settings]
+total_timeout_seconds = 300      # whole run; keep it below the hook timeout in settings
+default_timeout_seconds = 120    # per check, unless the check sets timeout_seconds
+stop_hook_max_blocks = 2         # 0 makes the Stop hook report without blocking
+
+[source]
+# Files whose content defines the source state that evidence is tied to. When any
+# of them changes, the last result no longer counts. "*" matches across directories,
+# so "src/*" selects everything under src/.
+include = ["*"]
+exclude = []
+
+# Declared but not configured yet: verify.py reports NOT CONFIGURED until you add a command.
+[checks.tests]
+# command = ["{python}", "-m", "pytest", "-q"]
+# command = ["npm", "test"]
+# command = ["dotnet", "test"]
+# command = ["go", "test", "./..."]
+# timeout_seconds = 300
+
+# A check that is not in "required" is reported but does not decide the result.
+# [checks.lint]
+# command = ["npm", "run", "lint"]
+
+# A check you want listed but not run yet.
+# [checks.e2e]
+# command = ["npx", "playwright", "test"]
+# enabled = false
+# reason = "needs a running server; runs in CI"
