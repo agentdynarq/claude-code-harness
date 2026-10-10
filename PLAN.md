@@ -30,11 +30,10 @@ dangerous-command filter, automatic edits to settings files, publishing.
 | 2026-10-10 | Claude Code session | Skill named `verified-change`, not `verify` | A project `verify` skill replaces the bundled `/verify` and changes commit instructions |
 | 2026-10-10 | Claude Code session | Template named `CLAUDE.template.md` | Claude Code loads `CLAUDE.md` files in subdirectories on demand |
 | 2026-10-11 | Claude Code session | Live Claude Code run (category C) not attempted from inside a Claude Code session | The CLI guards against nested sessions; the procedure is scripted in `scripts/live_session_check.py` for a normal terminal |
-| 2026-10-11 | Claude Code session | MIT licence, copyright "Dynarq" | Proposed default for an educational repository. Needs founder confirmation before publishing |
+| 2026-10-11 | Claude Code session | MIT licence, copyright "Dynarq" | Proposed default for an educational repository |
+| 2026-10-11 | Hasitha | Licence confirmed: MIT, copyright "Dynarq" | Founder reply "yes dynarq" |
+| 2026-10-11 | Hasitha | Run the live Claude Code check and publish to agentdynarq/claude-code-harness | Founder reply "okay run, push yourself" |
 
 ## Open items for the founder
 
-1. Confirm the licence and the copyright holder name.
-2. Run `python scripts/live_session_check.py --run` from a normal terminal, or say if it
-   should not run (it uses the Claude Code login and counts against usage).
-3. Approve publishing: repository description, visibility, first push.
+None at the time of the first push.
