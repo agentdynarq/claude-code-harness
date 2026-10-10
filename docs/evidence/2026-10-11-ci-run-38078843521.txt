@@ -1,51 +1,51 @@
-# GitHub Actions run 38077766051 on commit d779794 (workflow .github/workflows/tests.yml)
-# https://github.com/agentdynarq/claude-code-harness/actions/runs/38077766051
+# GitHub Actions run 38078843521 on commit 146740a (workflow .github/workflows/tests.yml)
+# https://github.com/agentdynarq/claude-code-harness/actions/runs/38078843521
 # Lines extracted from each job's log with gh run view --job --log on 2026-10-11. Not edited.
 # Lines starting with '|' come from the demo's steps 4 and 10, where the example's tests are
 # expected to fail before the fix. They are not test-suite failures.
 
-== test (ubuntu-latest, 3.13) (job 114288211445)
-test_windows_cmd_file_exit_code_is_preserved (test_verify.RunOutcomes.test_windows_cmd_file_exit_code_is_preserved) ... skipped 'Windows batch files'
-Ran 74 tests in 12.693s
-OK (skipped=1)
-claude-code-harness demo. Python 3.13.16 on linux.
+== test (windows-latest, 3.11) (job 114291385703)
+Ran 78 tests in 22.413s
+OK
+claude-code-harness demo. Python 3.11.9 on win32.
       | test_vat_is_rounded_per_rate (test_totals.InvoiceTotalsTest.test_vat_is_rounded_per_rate) ... FAIL
 All 14 expectations met.
 
-== test (ubuntu-latest, 3.11) (job 114288211837)
+== test (macos-latest, 3.13) (job 114291385807)
 test_windows_cmd_file_exit_code_is_preserved (test_verify.RunOutcomes.test_windows_cmd_file_exit_code_is_preserved) ... skipped 'Windows batch files'
-Ran 74 tests in 12.261s
-OK (skipped=1)
-claude-code-harness demo. Python 3.11.17 on linux.
-      | test_vat_is_rounded_per_rate (test_totals.InvoiceTotalsTest.test_vat_is_rounded_per_rate) ... FAIL
-All 14 expectations met.
-
-== test (macos-latest, 3.11) (job 114288211415)
-test_windows_cmd_file_exit_code_is_preserved (test_verify.RunOutcomes.test_windows_cmd_file_exit_code_is_preserved) ... skipped 'Windows batch files'
-Ran 74 tests in 13.184s
-OK (skipped=1)
-claude-code-harness demo. Python 3.11.9 on darwin.
-      | test_vat_is_rounded_per_rate (test_totals.InvoiceTotalsTest.test_vat_is_rounded_per_rate) ... FAIL
-All 14 expectations met.
-
-== test (macos-latest, 3.13) (job 114288212877)
-test_windows_cmd_file_exit_code_is_preserved (test_verify.RunOutcomes.test_windows_cmd_file_exit_code_is_preserved) ... skipped 'Windows batch files'
-Ran 74 tests in 13.889s
+Ran 78 tests in 13.148s
 OK (skipped=1)
 claude-code-harness demo. Python 3.13.15 on darwin.
 All 14 expectations met.
 
-== test (windows-latest, 3.13) (job 114288211460)
-Ran 74 tests in 16.066s
+== test (windows-latest, 3.13) (job 114291385809)
+Ran 78 tests in 19.131s
 OK
 claude-code-harness demo. Python 3.13.15 on win32.
       | test_vat_is_rounded_per_rate (test_totals.InvoiceTotalsTest.test_vat_is_rounded_per_rate) ... FAIL
 All 14 expectations met.
 
-== test (windows-latest, 3.11) (job 114288213354)
-Ran 74 tests in 22.354s
-OK
-claude-code-harness demo. Python 3.11.9 on win32.
+== test (ubuntu-latest, 3.11) (job 114291385826)
+test_windows_cmd_file_exit_code_is_preserved (test_verify.RunOutcomes.test_windows_cmd_file_exit_code_is_preserved) ... skipped 'Windows batch files'
+Ran 78 tests in 12.793s
+OK (skipped=1)
+claude-code-harness demo. Python 3.11.17 on linux.
+      | test_vat_is_rounded_per_rate (test_totals.InvoiceTotalsTest.test_vat_is_rounded_per_rate) ... FAIL
+All 14 expectations met.
+
+== test (macos-latest, 3.11) (job 114291385840)
+test_windows_cmd_file_exit_code_is_preserved (test_verify.RunOutcomes.test_windows_cmd_file_exit_code_is_preserved) ... skipped 'Windows batch files'
+Ran 78 tests in 13.979s
+OK (skipped=1)
+claude-code-harness demo. Python 3.11.9 on darwin.
+      | test_vat_is_rounded_per_rate (test_totals.InvoiceTotalsTest.test_vat_is_rounded_per_rate) ... FAIL
+All 14 expectations met.
+
+== test (ubuntu-latest, 3.13) (job 114291385883)
+test_windows_cmd_file_exit_code_is_preserved (test_verify.RunOutcomes.test_windows_cmd_file_exit_code_is_preserved) ... skipped 'Windows batch files'
+Ran 78 tests in 12.221s
+OK (skipped=1)
+claude-code-harness demo. Python 3.13.16 on linux.
       | test_vat_is_rounded_per_rate (test_totals.InvoiceTotalsTest.test_vat_is_rounded_per_rate) ... FAIL
 All 14 expectations met.
 

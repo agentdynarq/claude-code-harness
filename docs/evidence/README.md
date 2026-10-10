@@ -20,7 +20,7 @@ No independent reviewer has checked them.
 | `python scripts/mutation_check.py`, Python 3.13.12 | 26 of 26 deliberate defects caught | [2026-10-11-mutation-check-windows-py313.txt](2026-10-11-mutation-check-windows-py313.txt) |
 | `verify.py` on Python 3.10.20 | refuses, exit 2 | [2026-10-11-python310-refusal.txt](2026-10-11-python310-refusal.txt) |
 | `stop_hook.py` on Python 3.10.20 | refuses, exit 1 (non-blocking) | [2026-10-11-python310-hook-refusal.txt](2026-10-11-python310-hook-refusal.txt) |
-| GitHub Actions run 38077766051: Ubuntu, macOS, Windows x Python 3.11, 3.13 | 6 of 6 jobs passed; 74 tests each (1 Windows-only test skipped on Ubuntu and macOS); demo 14 of 14 in every job | [2026-10-11-ci-run-38077766051.txt](2026-10-11-ci-run-38077766051.txt) |
+| GitHub Actions run 38078843521 on commit 146740a: Ubuntu, macOS, Windows x Python 3.11, 3.13 | 6 of 6 jobs passed; 78 tests each (1 Windows-only test skipped on Ubuntu and macOS); demo 14 of 14 in every job | [2026-10-11-ci-run-38078843521.txt](2026-10-11-ci-run-38078843521.txt) |
 
 The 78 tests include the 12 cases the brief named:
 

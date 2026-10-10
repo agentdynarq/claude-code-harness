@@ -186,7 +186,8 @@ def main() -> int:
         summary = {k: result.get(k) for k in ("subtype", "is_error", "num_turns", "duration_ms", "total_cost_usd")}
 
         out.mkdir(parents=True, exist_ok=True)
-        (out / "stream.jsonl").write_text(sanitise(public_stream(session.stdout), project), encoding="utf-8")
+        (out / "stream.jsonl").write_text(sanitise(public_stream(session.stdout), project), encoding="utf-8",
+                                          newline="\n")
         record = [
             f"# Live Claude Code session record: {args.scenario}, {date.today().isoformat()}", "",
             "Written by scripts/live_session_check.py. Paths are replaced with <project>, ~ and <user>.", "",
@@ -202,7 +203,7 @@ def main() -> int:
             "", "## Changes", "```", untracked + "\n" + diff, "```",
             "", "## Final message", str(result.get("result", "")),
         ]
-        (out / "record.md").write_text(sanitise("\n".join(record) + "\n", project), encoding="utf-8")
+        (out / "record.md").write_text(sanitise("\n".join(record) + "\n", project), encoding="utf-8", newline="\n")
         print(f"Record written to {sanitise(str(out / 'record.md'), project)}. Read it before sharing it.")
         return 0
     finally:

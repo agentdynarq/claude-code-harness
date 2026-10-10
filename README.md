@@ -276,7 +276,7 @@ Evidence is kept in [`docs/evidence`](docs/evidence), separated by kind:
 | D. Comparative effectiveness | **Not run.** No claim is made that this kit makes developers faster or Claude's code better |
 
 The GitHub Actions results are recorded in
-[`docs/evidence/2026-10-11-ci-run-38077766051.txt`](docs/evidence/2026-10-11-ci-run-38077766051.txt),
+[`docs/evidence/2026-10-11-ci-run-38078843521.txt`](docs/evidence/2026-10-11-ci-run-38078843521.txt),
 extracted from the job logs. The deliberate-defect check ran on Windows only.
 
 The Claude Code facts this kit relies on, and where they come from, are in
